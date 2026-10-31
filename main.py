@@ -31,6 +31,21 @@ def exchange():
     base2 = combo_base2.get()
     target = combo_target.get()
 
+    empty_fields = []
+    if not base1:
+        empty_fields.append("Базовая валюта")
+    if not base2:
+        empty_fields.append("Вторая базовая валюта")
+    if not target:
+        empty_fields.append("Целевая валюта")
+
+    if empty_fields:
+        messagebox.showwarning(
+            "Пустые поля",
+            "Заполните следующие поля:\n" + "\n".join(empty_fields)
+        )
+        return
+
     if base1 == base2:
         messagebox.showwarning("Внимание, базовая и вторая базовая валюты не должны совпадать.")
         return
