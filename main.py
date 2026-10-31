@@ -71,3 +71,40 @@ def update_currency_names(event=None):
     name1.config(text=CURRENCY_NAMES.get(combo_base1.get(), ''))
     name2.config(text=CURRENCY_NAMES.get(combo_base2.get(), ''))
     target.config(text=CURRENCY_NAMES.get(combo_target.get(), ''))
+
+
+root = tk.Tk()
+root.title("Курсы обмена валют")
+root.geometry("320x350")
+
+currencies = list(CURRENCY_NAMES.keys())
+tk.Label(root, text="Базовая валюта").pack(pady=(15, 5))
+combo_base1 = ttk.Combobox(root, values=currencies)
+combo_base1.pack()
+combo_base1.bind("<<ComboboxSelected>>", update_currency_names)
+name1 = tk.Label(root, text="Евро")
+name1.pack(pady=(0, 10))
+tk.Label(root, text="Вторая базовая валюта").pack(pady=(5, 5))
+combo_base2 = ttk.Combobox(root, values=currencies, width=15)
+
+combo_base2.pack()
+combo_base2.bind("<<ComboboxSelected>>", update_currency_names)
+name2 = tk.Label(root, text="Американский доллар")
+name2.pack(pady=(0, 10))
+
+tk.Label(root, text="Целевая валюта").pack(pady=(5, 5))
+combo_target = ttk.Combobox(root, values=currencies, width=15)
+combo_target.set("RUB")
+combo_target.pack()
+combo_target.bind("<<ComboboxSelected>>", update_currency_names)
+target = tk.Label(root, text="Российский рубль")
+target.pack(pady=(0, 15))
+
+btn_exchange = tk.Button(root, text="Получить курс обмена", command=exchange)
+btn_exchange.pack(pady=5)
+
+result = tk.Label(root, text="", justify="center")
+result.pack(pady=1, fill="both")
+
+update_currency_names()
+root.mainloop()
